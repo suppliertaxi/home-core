@@ -42,7 +42,7 @@ export default function Footer() {
 
         {/* Bottom Links */}
         <div className="flex flex-wrap justify-center items-center gap-2 text-sm text-black/80">
-          <span>© 2024, HomeRun</span>
+          <span>© 2024, suppliertaxi</span>
           <Link href="#" className="hover:underline">
             Powered by Shopify
           </Link>

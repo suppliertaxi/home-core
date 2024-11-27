@@ -124,7 +124,7 @@ export default function Component() {
             <div className="bg-[#30a6f4] p-2 rounded">
               <div className="w-6 h-6">⚡</div>
             </div>
-            <span className="font-bold text-xl">HomeCore</span>
+            <span className="font-bold text-xl">Suppliertaxi</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -151,7 +151,7 @@ export default function Component() {
             <Button
               variant="ghost"
               size="icon"
-              className="hidden md:inline-flex"
+              // className="hidden md:inline-flex"
             >
               <User className="h-5 w-5" />
             </Button>
@@ -215,7 +215,7 @@ export default function Component() {
       {/* Category Grid */}
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-6">Civil & Interiors</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2  max-sm:grid-cols-3 md:grid-cols-4 gap-4">
           {categories.map((category) => (
             <div key={category.name}>
               <div className="bg-white rounded-lg p-2 mb-2 w-full aspect-square flex items-center justify-center">
@@ -235,7 +235,7 @@ export default function Component() {
         </div>
 
         <h2 className="text-2xl font-bold mb-6 mt-8">Electrical & Lighting</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 max-sm:grid-cols-3 md:grid-cols-4 gap-4">
           {electricalCategories.map((category) => (
             <div key={category.name}>
               <div className="bg-white rounded-lg p-2 mb-2 w-full aspect-square flex items-center justify-center">
