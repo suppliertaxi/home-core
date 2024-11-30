@@ -1,11 +1,14 @@
+"use client";
 import React from "react";
 import CementPage from "../_common/components/cement-page";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-function CategoriesPage({ params }: { params: { categories: string } }) {
-  console.log("object", params.categories);
-  if (params.categories === "cement") {
+function CategoriesPage() {
+  const param = useParams();
+  const categories = param?.categories;
+  if (categories === "cement") {
     return (
       <div>
         <CementPage />
