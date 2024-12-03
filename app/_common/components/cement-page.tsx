@@ -5,8 +5,6 @@ import { ArrowLeft, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import Footer from "./footer";
-import Header from "./header";
 
 interface Product {
   id: string;
@@ -91,8 +89,6 @@ export default function CementPage() {
   const router = useRouter();
   return (
     <>
-      {/* Header */}
-      <Header />
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-row items-center gap-2 ">
           <ArrowLeft
@@ -174,7 +170,6 @@ export default function CementPage() {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 }
