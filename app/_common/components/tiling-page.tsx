@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Minus, Plus } from "lucide-react";
+import { ArrowLeft, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Product {
   id: string;
@@ -105,10 +106,30 @@ export default function TilingPage() {
       [productId]: Math.max(1, prev[productId] + change),
     }));
   };
+  const router = useRouter();
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex flex-row items-center gap-2 ">
+        <ArrowLeft
+          onClick={() => {
+            router.replace("/");
+          }}
+        />
+        <h1 className="text-2xl font-bold">Tiling</h1>
+      </div>
+      <p className="text-sm text-muted-foreground mt-1">
+        Tile adhesives, grouts & hardware for all your interior & exterior Tile
+        & Stone installation needs.
+      </p>
+
+      <div className="flex justify-end mt-6 mb-8">
+        <div className="text-sm text-muted-foreground">
+          {products.length} products
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 max-sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div key={product.id} className="flex flex-col">
             <div className="relative aspect-square mb-4">
