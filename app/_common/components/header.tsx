@@ -6,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, Globe, Search, ShoppingCart, User } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 function Header() {
@@ -14,8 +15,10 @@ function Header() {
       <div className="border-b">
         <div className="container mx-auto px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-[#30a6f4] p-2 rounded">
-              <div className="w-6 h-6">⚡</div>
+            <div className="bg-[#30a6f4] rounded">
+              <div className="w-6 h-6">
+                <Image width={30} height={30} alt="logo" src={"/logo.jpeg"} />
+              </div>
             </div>
             <span className="font-bold text-xl">Suppliertaxi</span>
           </div>
