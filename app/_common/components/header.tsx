@@ -5,11 +5,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuthDetailsContext } from "@/contexts/authContext";
 import { ChevronDown, Globe, Search, ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 function Header() {
+  const router = useRouter();
+
+  const { customerDetails, fetching } = useAuthDetailsContext();
+  useEffect(() => {
+    console.log(customerDetails, fetching, customerDetails);
+    if (!customerDetails) {
+      router.push("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerDetails, fetching]);
   return (
     <>
       <div className="border-b">
@@ -49,7 +61,22 @@ function Header() {
               size="icon"
               // className="hidden md:inline-flex"
             >
-              <User className="h-5 w-5" />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="hidden md:flex items-center gap-1"
+                  >
+                    <User className="h-5 w-5" />
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>English</DropdownMenuItem>
+                  <DropdownMenuItem>Hindi</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </Button>
             <Button variant="ghost" size="icon">
               <ShoppingCart className="h-5 w-5" />
