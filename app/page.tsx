@@ -1,36 +1,22 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import Footer from "./_common/components/footer";
 import Header from "./_common/components/header";
 import { useRouter } from "next/navigation";
+import { useAuthDetailsContext } from "@/contexts/authContext";
 
 export default function Component() {
   const [bannerIndex, setBannerIndex] = useState(0);
+
+  const { fetching, categories } = useAuthDetailsContext();
   const banners = [
     "Superfast delivery in minutes ⚡",
     "Get 10% off on your first order!",
     "Free installation on select items",
-  ];
-
-  const categories = [
-    { name: "Cement", image: "/home_page/cement.png" },
-    { name: "Tiling", image: "/home_page/tilings.png" },
-    { name: "Painting", image: "/home_page/paintings.png" },
-    { name: "Water Proofing", image: "/home_page/water_proofing.png" },
-    {
-      name: "Plywood, MDF & HDHMR",
-      image: "/home_page/playwoods.png",
-    },
-    { name: "Fevicol", image: "/home_page/fevicols.png" },
-    {
-      name: "Hettich Hardware",
-      image: "/home_page/hettich_hardware.png",
-    },
-    { name: "Plumbing", image: "/home_page/plumbings.png" },
   ];
 
   const electricalCategories = [
@@ -87,7 +73,14 @@ export default function Component() {
   ];
 
   const router = useRouter();
-
+  if (fetching)
+    return (
+      <div className="h-[100vh] w-full justify-center align-middle items-center flex ">
+        <p>
+          <Loader2 className="animate-spin text-[#30a6f4]" />
+        </p>
+      </div>
+    );
   return (
     <div className="flex flex-col w-full">
       {/* Yellow Banner - Mobile Only */}
@@ -114,30 +107,34 @@ export default function Component() {
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-6">Civil & Interiors</h2>
         <div className="grid grid-cols-2  max-sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {categories.map((category) => (
-            <div
-              className="flex flex-col items-center"
-              key={category.name}
-              onClick={() => {
-                router.push(
-                  `/${category.name.toLowerCase().replace(" ", "_")}`
-                );
-              }}
-            >
-              <div className="bg-white rounded-lg mb-2 w-full aspect-square flex items-center justify-center">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  width={180}
-                  height={180}
-                  className="object-contain"
-                />
+          {categories &&
+            categories.map((category) => (
+              <div
+                className="flex flex-col items-center"
+                key={category.name}
+                onClick={() => {
+                  router.push(
+                    `/${category.name.toLowerCase().replace(" ", "_")}`
+                  );
+                }}
+              >
+                <div className="bg-white rounded-lg mb-2 w-full aspect-square flex items-center justify-center">
+                  <Image
+                    src={
+                      category.image ||
+                      "https://ykrhsjtpgljjxgxgffoh.supabase.co/storage/v1/object/public/cements/Category/product-jpeg-500x500.webp"
+                    }
+                    alt={category.name}
+                    width={180}
+                    height={180}
+                    className="object-contain"
+                  />
+                </div>
+                <div className="text-xs md:text-sm font-medium text-center align-middle justify-center w-full">
+                  {category.name}
+                </div>
               </div>
-              <div className="text-xs md:text-sm font-medium text-center align-middle justify-center w-full">
-                {category.name}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <h2 className="text-2xl font-bold mb-6 mt-8">Electrical & Lighting</h2>

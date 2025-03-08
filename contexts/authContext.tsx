@@ -1,7 +1,6 @@
 "use client";
 import { Tables } from "@/database.types";
 import { supabase } from "@/utils/supabse";
-import { Loader2 } from "lucide-react";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface ContextValue {
@@ -9,6 +8,8 @@ interface ContextValue {
   setFetching: (_x: false | true) => void;
   customerDetails: null | Tables<"customers">;
   setCustomerDetails: (_x: Tables<"customers">) => void;
+  categories: null | Tables<"categories">[];
+  setCategories: (_x: Tables<"categories">[] | null) => void;
 }
 
 const defaultProvider: ContextValue = {
@@ -16,6 +17,8 @@ const defaultProvider: ContextValue = {
   setFetching: () => {},
   customerDetails: null,
   setCustomerDetails: () => {},
+  categories: null,
+  setCategories: () => {},
 };
 const AuthDetailsContext = createContext<ContextValue>(defaultProvider);
 const useAuthDetailsContext = () => useContext(AuthDetailsContext);
@@ -24,18 +27,27 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
   const [customerDetails, setCustomerDetails] =
     useState<Tables<"customers"> | null>(null);
 
+  const [categories, setCategories] = useState<Tables<"categories">[] | null>(
+    null
+  );
+
   const getAuthDetails = async () => {
     const { data: authDetails } = await supabase.auth.getUser();
     if (authDetails.user?.id) {
-      console.log(authDetails.user?.id);
-      const { data } = await supabase
+      const { data: cus } = await supabase
         .from("customers")
         .select()
         .eq("user_id", authDetails.user?.id)
         .single()
         .throwOnError();
 
-      setCustomerDetails(data);
+      setCustomerDetails(cus);
+      await supabase
+        .from("categories")
+        .select()
+        .then(({ data }) => {
+          setCategories(data);
+        });
       setFetching(false);
     } else {
       setFetching(false);
@@ -45,14 +57,7 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     getAuthDetails();
   }, []);
-  if (fetching)
-    return (
-      <div className="h-[100vh] w-full justify-center align-middle items-center flex ">
-        <p>
-          <Loader2 className="animate-spin text-[#30a6f4]" />
-        </p>
-      </div>
-    );
+
   return (
     <AuthDetailsContext.Provider
       value={{
@@ -60,6 +65,8 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
         setFetching,
         customerDetails,
         setCustomerDetails,
+        categories,
+        setCategories,
       }}
     >
       {children}

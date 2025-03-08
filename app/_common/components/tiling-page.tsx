@@ -100,6 +100,12 @@ export default function TilingPage() {
     products.reduce((acc, product) => ({ ...acc, [product.id]: 1 }), {})
   );
 
+  // const categoryId = "5a67sd6asdb8asd8bad8afa";
+  // const items = await supabase
+  //   .from("items")
+  //   .select()
+  //   .eq("category_id", categoryId);
+
   const handleQuantityChange = (productId: string, change: number) => {
     setQuantities((prev) => ({
       ...prev,

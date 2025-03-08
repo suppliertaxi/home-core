@@ -10,6 +10,8 @@ import { ChevronDown, Globe, Search, ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import DeliveryTimePopup from "./header-utils/location-popup";
+import Link from "next/link";
 
 function Header() {
   const router = useRouter();
@@ -26,14 +28,16 @@ function Header() {
     <>
       <div className="border-b">
         <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-[#30a6f4] rounded">
-              <div className="w-6 h-6">
-                <Image width={30} height={30} alt="logo" src={"/logo.jpeg"} />
+          <Link href={"/"}>
+            <div className="flex items-center gap-2">
+              <div className="bg-[#30a6f4] rounded">
+                <div className="w-6 h-6">
+                  <Image width={30} height={30} alt="logo" src={"/logo.jpeg"} />
+                </div>
               </div>
+              <span className="font-bold text-xl">Suppliertaxi</span>
             </div>
-            <span className="font-bold text-xl">Suppliertaxi</span>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-4">
             <DropdownMenu>
@@ -61,7 +65,11 @@ function Header() {
               size="icon"
               // className="hidden md:inline-flex"
             >
-              <DropdownMenu>
+              <Link href={"/account"}>
+                <User className="h-5 w-5" />
+              </Link>
+
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
@@ -76,7 +84,7 @@ function Header() {
                   <DropdownMenuItem>English</DropdownMenuItem>
                   <DropdownMenuItem>Hindi</DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
             </Button>
             <Button variant="ghost" size="icon">
               <ShoppingCart className="h-5 w-5" />
@@ -89,11 +97,8 @@ function Header() {
           <span className="font-bold">60</span>
           <span className="text-xs ml-1">Mins</span>
         </div>
-        <Button variant="ghost" className="text-sm flex items-center gap-1">
-          Deliver To
-          <span className="font-semibold">560043</span>
-          <ChevronDown className="h-4 w-4" />
-        </Button>
+
+        <DeliveryTimePopup />
       </div>
 
       {/* Main Navigation - Desktop Only */}
