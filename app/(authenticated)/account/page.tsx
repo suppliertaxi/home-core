@@ -13,7 +13,7 @@ export default function AccountPage() {
 
         <div className="flex items-center gap-2 mb-12">
           <User className="h-4 w-4" />
-          <Link href="/logout" className="text-sm hover:underline">
+          <Link href="/login" className="text-sm hover:underline">
             Log out
           </Link>
         </div>
