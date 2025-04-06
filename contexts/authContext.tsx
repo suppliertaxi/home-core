@@ -1,6 +1,6 @@
 "use client";
 import { Tables } from "@/database.types";
-import { supabase } from "@/utils/supabse";
+import { supabase } from "@/utils/supabase";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface ContextValue {
@@ -10,6 +10,8 @@ interface ContextValue {
   setCustomerDetails: (_x: Tables<"customers">) => void;
   categories: null | Tables<"categories">[];
   setCategories: (_x: Tables<"categories">[] | null) => void;
+  items: null | Tables<"items">[];
+  setItems: (_x: Tables<"items">[]) => void;
 }
 
 const defaultProvider: ContextValue = {
@@ -19,7 +21,10 @@ const defaultProvider: ContextValue = {
   setCustomerDetails: () => {},
   categories: null,
   setCategories: () => {},
+  items: null,
+  setItems: () => {},
 };
+
 const AuthDetailsContext = createContext<ContextValue>(defaultProvider);
 const useAuthDetailsContext = () => useContext(AuthDetailsContext);
 function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
@@ -30,6 +35,7 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
   const [categories, setCategories] = useState<Tables<"categories">[] | null>(
     null
   );
+  const [items, setItems] = useState<Tables<"items">[] | null>(null);
 
   const getAuthDetails = async () => {
     const { data: authDetails } = await supabase.auth.getUser();
@@ -48,6 +54,14 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
         .then(({ data }) => {
           setCategories(data);
         });
+
+      await supabase
+        .from("items")
+        .select()
+        .then(({ data }) => {
+          setItems(data);
+        });
+
       setFetching(false);
     } else {
       setFetching(false);
@@ -67,6 +81,8 @@ function AuthDetailsProvider({ children }: { children: React.ReactNode }) {
         setCustomerDetails,
         categories,
         setCategories,
+        items,
+        setItems,
       }}
     >
       {children}

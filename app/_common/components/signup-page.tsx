@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { supabase } from "@/utils/supabse";
+import { supabase } from "@/utils/supabase";
 import Link from "next/link";
 import { Loader } from "lucide-react";
 

@@ -114,7 +114,9 @@ export default function Component() {
                 key={category.name}
                 onClick={() => {
                   router.push(
-                    `/${category.name.toLowerCase().replace(" ", "_")}`
+                    `/${category.name.toLowerCase().replace(" ", "_")}?id=${
+                      category?.id
+                    }`
                   );
                 }}
               >

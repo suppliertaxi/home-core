@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { supabase } from "@/utils/supabse";
+import { supabase } from "@/utils/supabase";
 
 export default function DeliveryTimePopup() {
   const [open, setOpen] = useState(false);
